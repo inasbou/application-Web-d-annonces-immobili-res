@@ -8,9 +8,9 @@ import logo from "../assets/logo.png";
 const Navbar = () => {
   return (
     <div className="flex flex-row  justify-between bg-gray-100 p-4">
-      <div className=" flex flex-row  justify-between gap-3">
+      <div className=" flex flex-row  justify-between gap-5">
         <div className="flex flex-row ">
-          <img src={logo} className="h-5 w-9 " />
+          <img src={logo}   className="h-5 w-9 " />
           <p className=" text-violet-900 ">AQAR</p>
         </div>
         <div className="flex flex-row px-2  rounded-2xl bg-violet-200 ">
