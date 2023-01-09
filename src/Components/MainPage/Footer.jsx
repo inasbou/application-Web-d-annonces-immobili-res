@@ -3,7 +3,6 @@ import background from '../../assets/background.png'
 import {FaLinkedinIn} from'react-icons/fa'
 import {RiFacebookFill} from'react-icons/ri'
 import {BsInstagram} from'react-icons/bs'
-//import {BsInstagram} from'react-icons/bs'
 import {SiYoutube} from'react-icons/si'
 const Footer = () => {
   return (

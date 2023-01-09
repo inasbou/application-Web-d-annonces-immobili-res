@@ -1,0 +1,125 @@
+.userpage{
+    margin-top: 50px;
+    margin-left: 50px;
+    display: flex ; 
+}
+
+.retourbtn {
+    color:#545454;
+    font-family: 'Poppins';
+    font-size: 25px;
+    font-weight: 500;
+    position: absolute;
+    left: 50px;
+    top :100px ; 
+}
+
+.box2{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    flex-direction: row;
+    padding: 50px;
+    display: flex;
+    position:absolute ; 
+    left:600px;
+    top:120px;
+    width:1000px;
+    height:650px;
+    border-radius: 30px;
+}
+
+.infos {
+   flex-direction: column ; 
+   text-align:left;
+   padding: 50px ;
+   justify-content: space-around;
+}
+
+.infos p {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 39px;
+    color: #000000;
+    
+}
+
+.infos input {
+    
+width: 350px;
+height: 60px;
+border: none; 
+border-radius: 20px;
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 500;
+font-size: 20px;
+line-height: 38px;
+background-color: #f1f1f1;
+
+}
+
+.image {
+   flex-direction: column ; 
+   text-align:left;
+   padding: 50px ;
+   justify-content:space-between;
+
+}
+
+.image a {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 33px;
+    cursor: pointer;
+    color: #505050;
+}
+
+.box1 {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    flex-direction: column;
+    padding: 50px;
+    display: flex;
+    position:absolute ; 
+    border-radius: 30px;
+    width:300px;
+    height: 300px ;
+    left:100px;
+    top:250px; 
+    justify-content: space-around;
+    align-items: center;
+}
+
+.links { 
+    flex-direction: column; 
+    display: flex ; 
+    justify-content: space-around;
+    
+    
+}
+
+.links a {
+font-family: 'Poppins';
+font-style: normal;
+font-size: 20px;
+font-weight: 500;
+line-height: 33px;
+color: #434C5B;
+padding: 10px;
+cursor: pointer;
+}
+.links a:hover {
+    color: #2825B9;
+    transform: scale( 1.1 );
+}
+.decnxn a {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 38px;
+    color: #2825B9;  
+    cursor: pointer;
+}
