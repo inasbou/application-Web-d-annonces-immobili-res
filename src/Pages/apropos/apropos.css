@@ -1,0 +1,23 @@
+.apropos{
+   margin-left: 80px ;
+   margin-top : 50px ;
+}
+
+.apropos h3 {
+font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600 ;
+    font-size: 55px;
+    line-height: 60px;
+    color: #5B84D3;
+}
+
+.apropos p {
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 500;
+font-size: 25px;
+line-height: 52px;
+color: #333333;
+}
