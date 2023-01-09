@@ -4,28 +4,28 @@ import Navbar from '../../Components/Navbar/Navbar';
 import {faArrowTurnUp , faPen , faUser , faPager} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Userimage from '../../assets/Ellipse 1.png'; 
-function Userpage() {
+const Userpage =() => { 
   return (
     <>
     <Navbar/>
     <div className="userpage"> 
-     <button className="retourbtn" onClick={"/main"}> 
+     <button className="retourbtn" > 
      <FontAwesomeIcon icon={faArrowTurnUp} />
-      Retour 
+      <a href="/main">Retour</a> 
       </button>
      <div className="box1"> 
       <div className="links">
-      <a>
+      <a href="/userpage">
       <FontAwesomeIcon icon={faUser} />
       Mon Compte
       </a>
-      <a>
+      <a href="/mesannonce">
       <FontAwesomeIcon icon={faPager} />
       Mes annonces
       </a>
       </div>
-      <div className='decnxn'>
-      <a>
+      <div className="decnxn"  >
+      <a href="/">
       Déconnexion
       </a>
       </div>

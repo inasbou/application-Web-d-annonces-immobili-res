@@ -17,6 +17,8 @@ function Navbarhome() {
         <div className="navbar-links_container">
           <p><a href="/apropos">A propos</a></p>
           <p><a href="/aide">Aide</a></p>  
+        </div>
+       </div>
         <div className="navbar-sign">
       <div className="navbar-signin"> 
       <button  className="openModalBtn"
@@ -37,8 +39,8 @@ function Navbarhome() {
         {modal2Open && <Modal2 setOpenModal={setModal2Open} />}
       </div>
       </div>
-        </div>
-      </div>
+
+
       
 
       <div className="navbar-menu">

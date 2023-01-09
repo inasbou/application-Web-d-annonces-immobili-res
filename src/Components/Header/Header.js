@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function Header() {
   return (
-    <div className="header section__padding">
+    <div className="header ">
     <div className="header-content">
     
       <h1 className="gradient__text">AQAR, Votre partenaire immobilier privilégié</h1>

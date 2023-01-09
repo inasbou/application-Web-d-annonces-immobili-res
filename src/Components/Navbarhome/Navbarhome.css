@@ -31,8 +31,9 @@ top: 30px;
 
 .navbar-sign {
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
+    justify-content:flex-start;
+    align-items:center; 
+
 }
 
 .navbar-links_container p,
@@ -53,7 +54,6 @@ top: 30px;
 .openModalBtn ,
 .navbar-menu_container-links-signin button {
     box-sizing: border-box;
-    position: absolute;
     width: 207px;
     height: 62px;
     left: 1250px;
@@ -80,7 +80,6 @@ top: 30px;
 }
 .openModal2Btn ,
 .navbar-menu_container-links-signup button {
-    position: absolute;
     width: 207px;
     height: 62px;
     left: 1500px;
@@ -112,8 +111,8 @@ top: 30px;
 
 .navbar-menu_container {
     display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
     text-align: center ;
     background: #5B84D3;
