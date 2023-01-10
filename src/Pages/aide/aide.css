@@ -1,6 +1,5 @@
 .aide{
-    margin-left: 80px ;
-    margin-top : 50px ;
+   padding:50px; 
 }
 
 .aide h3 {
@@ -28,4 +27,26 @@
     font-size: 25px;
     line-height: 52px;
     color: #333333;
+}
+
+
+@media screen and (max-width: 1050px) {
+    .aide{
+        flex-direction: column; 
+    }
+}
+
+@media screen and (max-width: 490px) {
+    .aide h3 {
+        font-weight: 500 ;
+        font-size: 25px;
+    }
+    .aide p {
+        font-weight: 400;
+        font-size: 15px;
+    }
+    .aide h4 {
+        font-weight: 500 ;
+        font-size: 18px;
+    }
 }

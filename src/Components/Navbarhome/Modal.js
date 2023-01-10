@@ -17,13 +17,13 @@ function Modal({ setOpenModal }) {
         </div>
         <div className="title">
           <h1>Créer votre compte</h1>
-        </div>
-        
+        </div> 
           <button className="googlebtn">
             <button className="google">
            <FontAwesomeIcon icon={faGoogle}/>
            </button>
-            S'inscrire avec Google</button>
+            S'inscrire avec Google
+            </button>
         
         <h6>En cliquant sur Inscrivez vous, vous indiquez que vous avez lu, compris et accepté les conditions d'utilisation de AQAR.</h6>
       </div>

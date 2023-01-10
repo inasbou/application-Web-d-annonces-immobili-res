@@ -55,7 +55,12 @@ function Navbarhome() {
           </div>
           <div className="navbar-menu_container-links-sign">
              <div className="navbar-menu_container-links-signin"> 
-               <button type="button">S'inscrire</button>
+               <button className="buttonmenu1" onClick={() => {
+          setModalOpen(true);
+        }}
+
+        >S'inscrire</button>
+        {modalOpen && <Modal setOpenModal={setModalOpen} />}
              </div>
              <div className="navbar-menu_container-links-signup"> 
                <button type="button">Connexion</button>

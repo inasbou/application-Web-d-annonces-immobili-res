@@ -1,6 +1,6 @@
 import React from 'react'
 import './Userpage.css'
-import Navbar from '../../Components/Navbar/Navbar'; 
+import Navbar from '../../Components/Navbar'; 
 import {faArrowTurnUp , faPen , faUser , faPager} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Userimage from '../../assets/Ellipse 1.png'; 

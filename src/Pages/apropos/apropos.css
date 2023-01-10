@@ -1,6 +1,5 @@
 .apropos{
-   margin-left: 80px ;
-   margin-top : 50px ;
+   padding:50px;
 }
 
 .apropos h3 {
@@ -20,4 +19,21 @@ font-weight: 500;
 font-size: 25px;
 line-height: 52px;
 color: #333333;
+}
+
+@media screen and (max-width: 1050px) {
+    .apropos{
+        flex-direction: column; 
+    }
+}
+
+@media screen and (max-width: 490px) {
+    .apropos h3 {
+        font-weight: 500 ;
+    font-size: 25px;
+    }
+    .apropos p {
+        font-weight: 400;
+        font-size: 15px;
+    }
 }

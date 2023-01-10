@@ -1,5 +1,5 @@
 import React  from 'react'
-import Navbar from '../../Components/Navbar/Navbar'
+import Navbar from '../../Components/Navbar'
 import './publier.css'
 import {faPlusCircle} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

@@ -10,7 +10,7 @@ const Navbar = () => {
   return (
     <div className="flex flex-row  justify-between bg-gray-100 p-4">
       <div className=" flex flex-row  justify-between gap-5">
-        <img src={logo} className="h-7" />
+        <img src={logo} className="h-7"  alt =""/>
 
         <div className="flex flex-row px-2  rounded-2xl bg-light-violet ">
           <input
@@ -43,11 +43,11 @@ const Navbar = () => {
             color="white"
             className=" rounded-full bg-violet-btn h-6 w-6 p-1 "
           />
-          <p className=" text-violet-text">Aide </p>
+          <p className=" text-violet-text">Aide</p>
         </div>
         <div className="flex flex-row">
-          <img src={pic} className="h-7 w-7" />
-          <p className=" text-violet-text">Mohammed </p>
+          <img src={pic} className="h-7 w-7" alt=""/>
+          <p className=" text-violet-text">Mohammed</p>
         </div>
       </div>
     </div>

@@ -52,7 +52,7 @@ top: 30px;
     text-decoration: underline solid 2px ;
 }
 .openModalBtn ,
-.navbar-menu_container-links-signin button {
+.buttonmenu1 {
     box-sizing: border-box;
     width: 207px;
     height: 62px;
@@ -100,9 +100,9 @@ top: 30px;
 
 .navbar-menu {
     margin-left: 1rem;
-
+    justify-content:flex-start;
     display: none;
-    position: relative;
+    position: relative; 
 }
 
 .navbar-menu svg {
@@ -140,6 +140,7 @@ top: 30px;
     }
     .navbar-menu {
         display: flex;
+        justify-content: flex-end;
 
     }
     

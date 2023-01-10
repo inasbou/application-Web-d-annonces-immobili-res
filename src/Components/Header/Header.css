@@ -67,7 +67,7 @@ margin-top: 80px;
 }
 
 .icons button:hover {
-    transform: scale( 1.1 );
+    transform: scale( 2.2 );
 }
 @media screen and (max-width: 1050px) {
     .header {
