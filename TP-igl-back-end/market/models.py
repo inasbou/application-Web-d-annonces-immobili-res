@@ -15,7 +15,9 @@ class User(db.Model):
     password = db.Column(db.String(100), nullable = False)
     profile_pic = db.Column(db.String(100), nullable = False)
     num_telephone = db.Column(db.Integer, nullable = False)
-    # annonces = db.relationship('Annonce', backref='user')
+    annonces = db.relationship('Annonce', backref='user')
+    messages = db.relationship('Message', backref='user')
+    Images = db.relationship('Img', backref='user')
 
 
     def __init__(self, id_user, username, fullname, email, address, password, profile_pic, num_telephone):
@@ -39,6 +41,7 @@ class UserSchema(ma.Schema) :
 
 
 class Annonce(db.Model) :
+    __tablename__ = 'annonce'
     id_annonce = db.Column(db.Integer(), primary_key = True)
     categories = db.Column(Enum('vente', 'echange', 'location', 'location pour vacance', name='categorie_annonce'))
     type_annonce =  db.Column(Enum('terrain', 'terrain agricole', 'appartement', 'maison', 'bungalow', name='type_annonce'))
@@ -50,6 +53,7 @@ class Annonce(db.Model) :
     adresse = db.Column(db.String(100), nullable = False)
     photo = db.Column(db.String(30), nullable = False)
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id_user'),nullable=False)
+    photos = db.relationship('Img', backref='annonce')
     # date_annonce = db.Column(db.DateTime, default = datetime.utc)
     #likes = db.relationship('Like', backref='likes_owned_post')
 
@@ -81,3 +85,31 @@ class Img(db.Model):
     img = db.Column(db.Text, unique=True, nullable=False)
     name = db.Column(db.Text, nullable=False)
     mimetype = db.Column(db.Text, nullable=False)
+    utilis = db.Column(db.Integer, db.ForeignKey('user.id_user'),nullable=False)
+    annon = db.Column(db.Integer, db.ForeignKey('annonce.id_annonce'),nullable=False)
+
+    def __init__(self, id_comm , contenu):
+        self.id_Img = id_Img
+        self.img= img
+        self.name = name 
+        self.mimetype= mimetype
+
+class UserSchema(ma.Schema) :
+    class Meta : 
+        fields = ('id_Img','img','name ','mimetype')
+
+
+class Messaga (db.Model):
+    #__tablename__ = 'user'
+    #serialize_only=()
+    id_comm = db.Column(db.Integer, primary_key=True, unique=True )
+    contenu = db.Column(db.Text)
+    utilisateur_id = db.Column(db.Integer, db.ForeignKey('user.id_user'),nullable=False)
+
+    def __init__(self, id_comm , contenu):
+        self.id_comm = id_comm
+        self.contenu = contenu
+
+class UserSchema(ma.Schema) :
+    class Meta : 
+        fields = ('id_comm','contenu')
