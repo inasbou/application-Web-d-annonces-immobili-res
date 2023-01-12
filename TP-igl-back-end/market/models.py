@@ -2,7 +2,8 @@ from market import db, ma, app
 import sqlalchemy.types as types
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, date
-from sqlalchemy import Enum  
+from sqlalchemy import Enum 
+from datetime import datetime 
 
 class User(db.Model):
     __tablename__ = 'user'
@@ -14,14 +15,13 @@ class User(db.Model):
     address = db.Column(db.String(100), nullable = False)
     password = db.Column(db.String(100), nullable = False)
     profile_pic = db.Column(db.String(100), nullable = False)
-    num_telephone = db.Column(db.Integer, nullable = False)
+    num_telephone = db.Column(db.Float(), nullable = False)
     annonces = db.relationship('Annonce', backref='user')
     messages = db.relationship('Message', backref='user')
     Images = db.relationship('Img', backref='user')
 
 
-    def __init__(self, id_user, username, fullname, email, address, password, profile_pic, num_telephone):
-        self.id_user = id_user
+    def __init__(self, username, fullname, email, address, password, profile_pic, num_telephone):
         self.username = username
         self.fullname = fullname
         self.email = email
@@ -43,7 +43,7 @@ class UserSchema(ma.Schema) :
 class Annonce(db.Model) :
     __tablename__ = 'annonce'
     id_annonce = db.Column(db.Integer(), primary_key = True)
-    categories = db.Column(Enum('vente', 'echange', 'location', 'location pour vacance', name='categorie_annonce'))
+    categorie = db.Column(Enum('vente', 'echange', 'location', 'location pour vacance', name='categorie_annonce'))
     type_annonce =  db.Column(Enum('terrain', 'terrain agricole', 'appartement', 'maison', 'bungalow', name='type_annonce'))
     surface = db.Column(db.Float(), nullable = False)
     description = db.Column(db.String(300), nullable = False)
@@ -52,13 +52,14 @@ class Annonce(db.Model) :
     commune = db.Column(db.String(30), nullable = False)
     adresse = db.Column(db.String(100), nullable = False)
     photo = db.Column(db.String(30), nullable = False)
-    owner_id = db.Column(db.Integer, db.ForeignKey('user.id_user'),nullable=False)
-    photos = db.relationship('Img', backref='annonce')
-    # date_annonce = db.Column(db.DateTime, default = datetime.utc)
+    date_annonce = db.Column(db.String(100), nullable = False)
+    owner_id = db.Column(db.Integer, db.ForeignKey('user.id_user'))
+    # photos = db.relationship('Img', backref='annonce')
+    
     #likes = db.relationship('Like', backref='likes_owned_post')
 
-    def __init__(self, id_annonce, categorie, type_annonce, surface, description, prix, wilaya, commune, adresse, photo, owner_id) : 
-        self.id_annonce = id_annonce
+    def __init__(self, categorie, type_annonce, surface, description, prix, wilaya, commune, adresse, photo, date_annonce, owner_id ) : 
+
         self.categorie = categorie
         self.type_annonce = type_annonce
         self.surface = surface
@@ -68,17 +69,17 @@ class Annonce(db.Model) :
         self.commune = commune
         self.adresse = adresse
         self.photo = photo
+        self.date_annonce = date_annonce
         self.owner_id = owner_id
-        #self.created_at = created_at
 
 class AnnonceSchema(ma.Schema) :
     class Meta : 
-        fields = ('id_annonce','categorie', 'type_annonce', 'surface', 'description', 'prix', 'wilaya', 'commune', 'adresse','photo', 'owner_id')
+        fields = ('categorie', 'type_annonce', 'surface', 'description', 'prix', 'wilaya', 'commune', 'adresse','photo', ' date_annonce', 'owner_id')
 
 
-# with app.app_context() : 
-#       db.drop_all()
-#       db.create_all()
+with app.app_context() : 
+      db.drop_all()
+      db.create_all()
 
 class Img(db.Model):
     id_Img = db.Column(db.Integer, primary_key=True)
@@ -99,7 +100,7 @@ class UserSchema(ma.Schema) :
         fields = ('id_Img','img','name ','mimetype')
 
 
-class Messaga (db.Model):
+class Message (db.Model):
     #__tablename__ = 'user'
     #serialize_only=()
     id_comm = db.Column(db.Integer, primary_key=True, unique=True )

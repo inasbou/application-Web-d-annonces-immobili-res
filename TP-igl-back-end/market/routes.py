@@ -14,6 +14,7 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.linear_model import LinearRegression
 from tabulate import tabulate
 import os
+from datetime import datetime
 
 
 
@@ -35,7 +36,7 @@ def get_annonces():
 
 @app.post("/user")
 def create_user():
-    id_user = request.json['id_user']
+
     username = request.json['username']
     fullname = request.json['fullname']
     email = request.json['email']
@@ -45,16 +46,16 @@ def create_user():
     num_telephone = request.json['num_telephone']
 
     
-    user_ = User(id_user, username, fullname, email, address, password, profile_pic, num_telephone)
+    user_ = User(  username, fullname, email, address, password, profile_pic, num_telephone)
     
     db.session.add(user_ )
     db.session.commit()
     return user_schema.jsonify(user_ )
 
 #Deposer un annonce 
-@app.post("/annonce")
-def create_annonce():
-    id_annonce = request.json['id_annonce']
+@app.post("/annonce/<id_user>")
+def create_annonce(id_user):
+
     categorie = request.json['categorie']
     type_annonce = request.json['type_annonce']
     surface = request.json['surface']
@@ -64,8 +65,10 @@ def create_annonce():
     commune = request.json['commune']
     adresse = request.json['adresse']
     photo = request.json['photo']
+    date_annonce = datetime.now()
+   
     
-    annonce = Annonce(id_annonce, categorie, type_annonce, surface, description, prix, wilaya, commune, adresse, photo)
+    annonce = Annonce(categorie, type_annonce, surface, description, prix, wilaya, commune, adresse, photo,  date_annonce, id_user )
     
     db.session.add(annonce)
     db.session.commit()
