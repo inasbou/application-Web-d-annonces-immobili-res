@@ -1,6 +1,6 @@
 from flask import jsonify, request, Response
 from market import app, db
-from market.models import Annonce, AnnonceSchema, User,  UserSchema, Img
+from market.models import Annonce, AnnonceSchema, User,  UserSchema, Img, Img2
 import pickle
 from joblib import dump, load
 import pandas as pd
@@ -52,15 +52,25 @@ def create_user():
 
     
     user = User(  username, fullname, email, address, password, profile_pic, num_telephone)
-    
+
     db.session.add(user)
     db.session.commit()
-    return user_schema.jsonify(user)
+    return jsonify( {
+                       "username": user.username,
+                       "fullname": user.fullname,
+                       "email" : user.email,
+                       "address" : user.address, 
+                       "password" : user.password,
+                       "profile_pic": user.profile_pic,
+                       "num_telephone": user.num_telephone
+                    }  
+                  ) 
+   # return user_schema.jsonify(user)
 
 #------------------------------------------------------------------------------#
 
 #Deposer un annonce 
-@app.post("/annonce/<id_user>")
+@app.post("/annonce/<user_id>")
 def create_annonce(id_user):
 
     categorie = request.json['categorie']
@@ -74,7 +84,7 @@ def create_annonce(id_user):
     photo = request.json['photo']
     date_annonce = datetime.now()
    
-    annonce = Annonce(categorie, type_annonce, surface, description, prix, wilaya, commune, adresse, photo,  date_annonce, id_user )
+    annonce = Annonce(categorie, type_annonce, surface, description, prix, wilaya, commune, adresse, photo,  date_annonce, user_id )
     
     db.session.add(annonce)
     db.session.commit()
@@ -232,7 +242,7 @@ def get_img(id):
 
 # upload une photo de profile
 @app.post("/upload2/<id_user>")
-def upload(id_user):
+def upload2(id_user):
 
     file = request.files['']
     if not file:
@@ -244,11 +254,9 @@ def upload(id_user):
     if not filename or not mimetype:
         return jsonify({'error': 'Bad upload!'}), 400
 
-    with app.app_context() : 
-       db.drop_all()
-       db.create_all()
 
-    img = Img (img=file.read(), name=filename, mimetype=mimetype, utilis= id_annonce)
+
+    img = Img2 (img=file.read(), name=filename, mimetype=mimetype, utilis= id_user)
     db.session.add(img)
     db.session.commit()
 
@@ -258,8 +266,8 @@ def upload(id_user):
 
 #recupere photo de profilw du BD
 @app.get('/recuper2/<id>')
-def get_img(id):
-    img = Img.query.filter_by(id_Img=id).first()
+def get_img2(id):
+    img = Img2.query.filter_by(id_Img=id).first()
     if not img:
         return 'Img Not Found!', 404
 

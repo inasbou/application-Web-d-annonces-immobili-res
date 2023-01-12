@@ -7,7 +7,7 @@ from datetime import datetime
 
 class User(db.Model):
     __tablename__ = 'user'
-    serialize_only=()
+    #serialize_only=()
     id_user = db.Column(db.Integer, primary_key=True )
     username = db.Column(db.String(50), nullable=False, unique=True )
     fullname = db.Column(db.String(100), unique=True, nullable=False )
@@ -17,7 +17,6 @@ class User(db.Model):
     profile_pic = db.Column(db.String(100), nullable = False)
     num_telephone = db.Column(db.Float(), nullable = False)
     annonces = db.relationship('Annonce', backref='user')
-    #messages = db.relationship('Message', backref='user')
     Images = db.relationship('Img2', backref='user')
 
 
@@ -39,6 +38,8 @@ class UserSchema(ma.Schema) :
 #      db.drop_all()
 #      db.create_all()
 
+#------------------------------------------------------------------------------------#
+#------------------------------------------------------------------------------------#
 
 class Annonce(db.Model) :
     __tablename__ = 'annonce'
@@ -52,13 +53,14 @@ class Annonce(db.Model) :
     commune = db.Column(db.String(30), nullable = False)
     adresse = db.Column(db.String(100), nullable = False)
     photo = db.Column(db.String(30), nullable = False)
-    date_annonce = db.Column(db.String(100), nullable = False)
+    date_annonce =  db.Column(db.String(100), default = "date")
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id_user'))
-    # photos = db.relationship('Img', backref='annonce')
+    photos = db.relationship('Img', backref='annonce')
+    commentaires = db.relationship('Commentaire', backref='annonce')
     
     #likes = db.relationship('Like', backref='likes_owned_post')
 
-    def __init__(self, categorie, type_annonce, surface, description, prix, wilaya, commune, adresse, photo, date_annonce, owner_id ) : 
+    def __init__(self, categorie, type_annonce, surface, description, prix, wilaya, commune, adresse, photo, date_annonce ) : 
 
         self.categorie = categorie
         self.type_annonce = type_annonce
@@ -81,13 +83,15 @@ class AnnonceSchema(ma.Schema) :
 #       db.drop_all()
 #       db.create_all()
 
+#------------------------------------------------------------------------------------#
+#------------------------------------------------------------------------------------#
+
 class Img(db.Model):
     __tablename__ = 'images'
     id_Img = db.Column(db.Integer, primary_key=True)
     img = db.Column(db.Text, unique=True, nullable=False)
     name = db.Column(db.Text, nullable=False)
     mimetype = db.Column(db.Text, nullable=False)
-    #utilis = db.Column(db.Integer, db.ForeignKey('user.id_user'),nullable=False)
     annon = db.Column(db.Integer, db.ForeignKey('annonce.id_annonce'),nullable=False)
 
     # def __init__(self, img, name, mimetype, annon):
@@ -100,6 +104,9 @@ class UserSchema(ma.Schema) :
     class Meta : 
         fields = ('id_Img','img','name','mimetype', 'annon')
 
+
+#------------------------------------------------------------------------------------#
+#------------------------------------------------------------------------------------#
 
 class Img2 (db.Model):
     __tablename__ = 'images2'
@@ -115,22 +122,29 @@ class Img2 (db.Model):
     #     self.name = name 
     #     self.mimetype= mimetype
     #     self.annon = annon 
+class UserSchema(ma.Schema) :
+    class Meta : 
+        fields = ('id_Img','img','name','mimetype', 'utilis')
 
 class UserSchema(ma.Schema) :
     class Meta : 
         fields = ('id_Img','img','name','mimetype', 'annon')
 
 
-class Message (db.Model):
+#------------------------------------------------------------------------------------#
+#------------------------------------------------------------------------------------#
+
+class Commentaire (db.Model):
     #__tablename__ = 'user'
     #serialize_only=()
+    __tablename__ = 'commentaire'
     id_comm = db.Column(db.Integer, primary_key=True, unique=True )
     contenu = db.Column(db.Text)
-    utilisateur_id = db.Column(db.Integer, db.ForeignKey('user.id_user'),nullable=False)
+    annon_id = db.Column(db.Integer, db.ForeignKey('annonce.id_annonce'),nullable=False)
 
-    def __init__(self, id_comm , contenu):
-        self.id_comm = id_comm
-        self.contenu = contenu
+    # def __init__(self, id_comm , contenu):
+    #     self.id_comm = id_comm
+    #     self.contenu = contenu
 
 class UserSchema(ma.Schema) :
     class Meta : 
