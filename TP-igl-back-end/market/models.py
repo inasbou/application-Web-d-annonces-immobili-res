@@ -60,7 +60,7 @@ class Annonce(db.Model) :
     
     #likes = db.relationship('Like', backref='likes_owned_post')
 
-    def __init__(self, categorie, type_annonce, surface, description, prix, wilaya, commune, adresse, photo, date_annonce ) : 
+    def __init__(self, categorie, type_annonce, surface, description, prix, wilaya, commune, adresse, photo, date_annonce, owner_id ) : 
 
         self.categorie = categorie
         self.type_annonce = type_annonce

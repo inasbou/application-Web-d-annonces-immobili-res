@@ -70,7 +70,7 @@ def create_user():
 #------------------------------------------------------------------------------#
 
 #Deposer un annonce 
-@app.post("/annonce/<user_id>")
+@app.post("/annonce/<id_user>")
 def create_annonce(id_user):
 
     categorie = request.json['categorie']
@@ -84,7 +84,7 @@ def create_annonce(id_user):
     photo = request.json['photo']
     date_annonce = datetime.now()
    
-    annonce = Annonce(categorie, type_annonce, surface, description, prix, wilaya, commune, adresse, photo,  date_annonce, user_id )
+    annonce = Annonce(categorie, type_annonce, surface, description, prix, wilaya, commune, adresse, photo,  date_annonce, id_user )
     
     db.session.add(annonce)
     db.session.commit()
@@ -217,9 +217,6 @@ def upload(id_annonce):
     if not filename or not mimetype:
         return jsonify({'error': 'Bad upload!'}), 400
 
-    with app.app_context() : 
-       db.drop_all()
-       db.create_all()
 
     img = Img (img=file.read(), name=filename, mimetype=mimetype, annon= id_annonce)
     db.session.add(img)
