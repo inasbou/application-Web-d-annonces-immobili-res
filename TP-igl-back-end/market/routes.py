@@ -1,6 +1,6 @@
 from flask import jsonify, request, Response
 from market import app, db
-from market.models import Annonce, AnnonceSchema, User,  UserSchema, Img, Img2
+from market.models import Annonce, AnnonceSchema, User,  UserSchema, Img, Img2, Commentaire, Img2Schema,ImgSchema, ComntSchema
 import pickle
 from joblib import dump, load
 import pandas as pd
@@ -23,11 +23,14 @@ user_schema = UserSchema()
 users_schema = UserSchema(many=True) 
 
 annonce_schema = AnnonceSchema()
-annonces_schema = AnnonceSchema(many=True)   
+annonces_schema = AnnonceSchema(many=True)  
+
+comn_schema = ComntSchema()
+comns_schema = ComntSchema(many=True)  
 
 
 
-
+#------------------------------------------------------------------------------#
 
 #Affichage tous les annonces 
 @app.get("/AllAnnonces")
@@ -35,6 +38,15 @@ def get_annonces():
     all_annonces = Annonce.query.all()
     annonces = annonces_schema.dump(all_annonces)
     return jsonify(annonces)
+
+#------------------------------------------------------------------------------#
+
+#Affichage tous les utilisateurs
+@app.get("/AllUsers")
+def get_users(): 
+    all_users = User.query.all()
+    users = users_schema.dump(all_users)
+    return jsonify(users)
 
 #------------------------------------------------------------------------------#
 
@@ -178,7 +190,9 @@ def get_annonce(id_annonce):
                            "commune" : annonce.commune,
                            "adresse" : annonce.adresse,
                            "photo" : annonce.photo, 
-                
+                    },
+
+                    {
                            "username": userr.username,
                            "fullname": userr.fullname,
                            "email" : userr.email,
@@ -271,3 +285,15 @@ def get_img2(id):
     return Response(img.img, mimetype=img.mimetype)
 
 #------------------------------------------------------------------------------#
+#Deposer un commentaire 
+@app.post("/commentaire/<id_annonce>")
+def create_commentaire(id_annonce):
+
+    contenu = request.json['contenu']
+    comnt = Commentaire(contenu, id_annonce)
+    
+    db.session.add(comnt)
+    db.session.commit()
+    comnt = comn_schema.dump(comnt)
+    return jsonify(comnt)
+    # return annonce_schema.jsonify(comnt)

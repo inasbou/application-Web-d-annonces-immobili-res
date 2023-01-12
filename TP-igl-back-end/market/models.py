@@ -100,7 +100,7 @@ class Img(db.Model):
     #     self.mimetype= mimetype
     #     self.annon = annon 
 
-class UserSchema(ma.Schema) :
+class ImgSchema(ma.Schema) :
     class Meta : 
         fields = ('id_Img','img','name','mimetype', 'annon')
 
@@ -122,11 +122,9 @@ class Img2 (db.Model):
     #     self.name = name 
     #     self.mimetype= mimetype
     #     self.annon = annon 
-class UserSchema(ma.Schema) :
-    class Meta : 
-        fields = ('id_Img','img','name','mimetype', 'utilis')
 
-class UserSchema(ma.Schema) :
+
+class Img2Schema(ma.Schema) :
     class Meta : 
         fields = ('id_Img','img','name','mimetype', 'annon')
 
@@ -142,10 +140,10 @@ class Commentaire (db.Model):
     contenu = db.Column(db.Text)
     annon_id = db.Column(db.Integer, db.ForeignKey('annonce.id_annonce'),nullable=False)
 
-    # def __init__(self, id_comm , contenu):
-    #     self.id_comm = id_comm
-    #     self.contenu = contenu
+    def __init__(self, contenu, annon_id):
+        self.contenu = contenu
+        self.annon_id = annon_id
 
-class UserSchema(ma.Schema) :
+class ComntSchema(ma.Schema) :
     class Meta : 
-        fields = ('id_comm','contenu')
+        fields = ('contenu', 'annon_id')
