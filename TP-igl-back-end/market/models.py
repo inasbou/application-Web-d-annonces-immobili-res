@@ -18,7 +18,7 @@ class User(db.Model):
     num_telephone = db.Column(db.Float(), nullable = False)
     annonces = db.relationship('Annonce', backref='user')
     #messages = db.relationship('Message', backref='user')
-    #Images = db.relationship('Img', backref='user')
+    Images = db.relationship('Img2', backref='user')
 
 
     def __init__(self, username, fullname, email, address, password, profile_pic, num_telephone):
@@ -89,6 +89,26 @@ class Img(db.Model):
     mimetype = db.Column(db.Text, nullable=False)
     #utilis = db.Column(db.Integer, db.ForeignKey('user.id_user'),nullable=False)
     annon = db.Column(db.Integer, db.ForeignKey('annonce.id_annonce'),nullable=False)
+
+    # def __init__(self, img, name, mimetype, annon):
+    #     self.img= img
+    #     self.name = name 
+    #     self.mimetype= mimetype
+    #     self.annon = annon 
+
+class UserSchema(ma.Schema) :
+    class Meta : 
+        fields = ('id_Img','img','name','mimetype', 'annon')
+
+
+class Img2 (db.Model):
+    __tablename__ = 'images2'
+    id_Img = db.Column(db.Integer, primary_key=True)
+    img = db.Column(db.Text, unique=True, nullable=False)
+    name = db.Column(db.Text, nullable=False)
+    mimetype = db.Column(db.Text, nullable=False)
+    utilis = db.Column(db.Integer, db.ForeignKey('user.id_user'),nullable=False)
+    #annon = db.Column(db.Integer, db.ForeignKey('annonce.id_annonce'),nullable=False)
 
     # def __init__(self, img, name, mimetype, annon):
     #     self.img= img

@@ -36,6 +36,7 @@ def get_annonces():
     annonces = annonces_schema.dump(all_annonces)
     return jsonify(annonces)
 
+#------------------------------------------------------------------------------#
 
 #Creation account user 
 @app.post("/user")
@@ -55,6 +56,8 @@ def create_user():
     db.session.add(user)
     db.session.commit()
     return user_schema.jsonify(user)
+
+#------------------------------------------------------------------------------#
 
 #Deposer un annonce 
 @app.post("/annonce/<id_user>")
@@ -77,6 +80,8 @@ def create_annonce(id_user):
     db.session.commit()
     return annonce_schema.jsonify(annonce)
 
+#------------------------------------------------------------------------------#
+
 #Consulter User
 @app.get("/consul/<id_user>")
 def get_user(id_user):
@@ -94,6 +99,7 @@ def get_user(id_user):
                   )     
 
 
+#------------------------------------------------------------------------------#
 
 #filtrage_Annonce 
 # % le type  
@@ -116,6 +122,8 @@ def filt_annonces_commune (comm):
     annonce = annonces_schema.dump(annonce)
     return jsonify(annonce)
 
+#------------------------------------------------------------------------------#
+
 #Rech des annonces 
 @app.get("/Test/<mot>")
 def search_mot(mot):
@@ -130,7 +138,9 @@ def search_mot(mot):
     #else:
        #  return jsonify({'message': 'Pas de resultat'})
             
-           
+
+#------------------------------------------------------------------------------#
+         
 #Supprimer Annonce
 @app.delete("/annonce/<id>")
 def delete_annonce(id) :
@@ -138,6 +148,8 @@ def delete_annonce(id) :
     db.session.delete(annonce)
     db.session.commit()  
     return annonce_schema.jsonify(annonce)
+
+#------------------------------------------------------------------------------#
 
 #Consulter Annonce avec les inf sur l utolisateur 
 @app.get("/consultation/<id_annonce>")
@@ -168,6 +180,7 @@ def get_annonce(id_annonce):
                     }  
                   )     
 
+#------------------------------------------------------------------------------#
 
 #Affichage plus de details sur user 
 @app.get("/Annonce/<user_id>")
@@ -175,6 +188,8 @@ def details(user_id):
     user_ = User.query.get(user_id)
     user_ = annonce_schema.dump(user_)
     return jsonify(user_)
+
+#------------------------------------------------------------------------------#
 
 # upload un photo pour une annonce 
 @app.post("/upload/<id_annonce>")
@@ -202,6 +217,9 @@ def upload(id_annonce):
 
     return  jsonify({'msg': 'Img Uploaded! '}), 200
 
+#------------------------------------------------------------------------------#
+
+#recupere photo d annonce du BD
 @app.get('/recuper/<id>')
 def get_img(id):
     img = Img.query.filter_by(id_Img=id).first()
@@ -209,3 +227,42 @@ def get_img(id):
         return 'Img Not Found!', 404
 
     return Response(img.img, mimetype=img.mimetype)
+
+#------------------------------------------------------------------------------#
+
+# upload une photo de profile
+@app.post("/upload2/<id_user>")
+def upload(id_user):
+
+    file = request.files['']
+    if not file:
+        return jsonify({'error': 'No pic uploaded!'}), 400
+        # return 'No pic uploaded!', 400
+
+    filename = secure_filename(file.filename)
+    mimetype = file.mimetype
+    if not filename or not mimetype:
+        return jsonify({'error': 'Bad upload!'}), 400
+
+    with app.app_context() : 
+       db.drop_all()
+       db.create_all()
+
+    img = Img (img=file.read(), name=filename, mimetype=mimetype, utilis= id_annonce)
+    db.session.add(img)
+    db.session.commit()
+
+    return  jsonify({'msg': 'Img Uploaded! '}), 200
+
+#------------------------------------------------------------------------------#
+
+#recupere photo de profilw du BD
+@app.get('/recuper2/<id>')
+def get_img(id):
+    img = Img.query.filter_by(id_Img=id).first()
+    if not img:
+        return 'Img Not Found!', 404
+
+    return Response(img.img, mimetype=img.mimetype)
+
+#------------------------------------------------------------------------------#
