@@ -202,9 +202,9 @@ def upload(id_annonce):
 
     return  jsonify({'msg': 'Img Uploaded! '}), 200
 
-@app.route('/<int:id>')
+@app.get('/recuper/<id>')
 def get_img(id):
-    img = Img.query.filter_by(id=id).first()
+    img = Img.query.filter_by(id_Img=id).first()
     if not img:
         return 'Img Not Found!', 404
 
