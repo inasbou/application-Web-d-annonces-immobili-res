@@ -82,22 +82,23 @@ class AnnonceSchema(ma.Schema) :
 #       db.create_all()
 
 class Img(db.Model):
+    __tablename__ = 'images'
     id_Img = db.Column(db.Integer, primary_key=True)
     img = db.Column(db.Text, unique=True, nullable=False)
     name = db.Column(db.Text, nullable=False)
     mimetype = db.Column(db.Text, nullable=False)
-    utilis = db.Column(db.Integer, db.ForeignKey('user.id_user'),nullable=False)
+    #utilis = db.Column(db.Integer, db.ForeignKey('user.id_user'),nullable=False)
     annon = db.Column(db.Integer, db.ForeignKey('annonce.id_annonce'),nullable=False)
 
-    def __init__(self, id_comm , contenu):
-        self.id_Img = id_Img
-        self.img= img
-        self.name = name 
-        self.mimetype= mimetype
+    # def __init__(self, img, name, mimetype, annon):
+    #     self.img= img
+    #     self.name = name 
+    #     self.mimetype= mimetype
+    #     self.annon = annon 
 
 class UserSchema(ma.Schema) :
     class Meta : 
-        fields = ('id_Img','img','name ','mimetype')
+        fields = ('id_Img','img','name','mimetype', 'annon')
 
 
 class Message (db.Model):

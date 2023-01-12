@@ -1,6 +1,6 @@
-from flask import jsonify, request
+from flask import jsonify, request, Response
 from market import app, db
-from market.models import Annonce, AnnonceSchema, User,  UserSchema
+from market.models import Annonce, AnnonceSchema, User,  UserSchema, Img
 import pickle
 from joblib import dump, load
 import pandas as pd
@@ -16,6 +16,7 @@ from tabulate import tabulate
 import os
 from datetime import datetime
 from pprint import pprint
+from werkzeug.utils import secure_filename
 
 
 user_schema = UserSchema()
@@ -36,6 +37,7 @@ def get_annonces():
     return jsonify(annonces)
 
 
+#Creation account user 
 @app.post("/user")
 def create_user():
 
@@ -174,27 +176,36 @@ def details(user_id):
     user_ = annonce_schema.dump(user_)
     return jsonify(user_)
 
+# upload un photo pour une annonce 
+@app.post("/upload/<id_annonce>")
+def upload(id_annonce):
 
+    file = request.files['']
+    # if file not in request.files:
+    #   return jsonify({'error': 'photo not provided'}), 400
+    if not file:
+        return jsonify({'error': 'No pic uploaded!'}), 400
+        # return 'No pic uploaded!', 400
 
-#Telecharger un photo et sauvegarder
-@app.route('/upload', methods=['POST'])
-def upload():
-    
-    if 'file' not in request.files:
-        return jsonify({'error': 'photo not provided'}), 400
-    if file.filename == '':
-        return jsonify({'error': 'no file selected'}), 400
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    return jsonify({'msg': 'photo uploaded successfully '})
-      
+    filename = secure_filename(file.filename)
+    mimetype = file.mimetype
+    if not filename or not mimetype:
+        return jsonify({'error': 'Bad upload!'}), 400
 
-   # pic = request.files['pic']
-   # if not pic:
-   #     return 'No pic uploaded!', 400
+    with app.app_context() : 
+       db.drop_all()
+       db.create_all()
 
-   # filename = secure_filename(pic.filename)
-   # mimetype = pic.mimetype
-   # if not filename or not mimetype:
-       # return 'Bad upload!', 400
+    img = Img (img=file.read(), name=filename, mimetype=mimetype, annon= id_annonce)
+    db.session.add(img)
+    db.session.commit()
+
+    return  jsonify({'msg': 'Img Uploaded! '}), 200
+
+@app.route('/<int:id>')
+def get_img(id):
+    img = Img.query.filter_by(id=id).first()
+    if not img:
+        return 'Img Not Found!', 404
+
+    return Response(img.img, mimetype=img.mimetype)
