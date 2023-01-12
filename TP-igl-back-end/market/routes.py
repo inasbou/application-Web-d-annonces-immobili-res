@@ -1,6 +1,6 @@
 from flask import jsonify, request
 from market import app, db
-from market.models import Annonce, AnnonceSchema, User, UserSchema
+from market.models import Annonce, AnnonceSchema, User,  UserSchema
 import pickle
 from joblib import dump, load
 import pandas as pd
@@ -15,14 +15,16 @@ from sklearn.linear_model import LinearRegression
 from tabulate import tabulate
 import os
 from datetime import datetime
+from pprint import pprint
 
 
+user_schema = UserSchema()
+users_schema = UserSchema(many=True) 
 
 annonce_schema = AnnonceSchema()
 annonces_schema = AnnonceSchema(many=True)   
 
-user_schema = UserSchema()
-users_schema = UserSchema(many=True) 
+
 
 
 
@@ -46,11 +48,11 @@ def create_user():
     num_telephone = request.json['num_telephone']
 
     
-    user_ = User(  username, fullname, email, address, password, profile_pic, num_telephone)
+    user = User(  username, fullname, email, address, password, profile_pic, num_telephone)
     
-    db.session.add(user_ )
+    db.session.add(user)
     db.session.commit()
-    return user_schema.jsonify(user_ )
+    return user_schema.jsonify(user)
 
 #Deposer un annonce 
 @app.post("/annonce/<id_user>")
@@ -67,12 +69,28 @@ def create_annonce(id_user):
     photo = request.json['photo']
     date_annonce = datetime.now()
    
-    
     annonce = Annonce(categorie, type_annonce, surface, description, prix, wilaya, commune, adresse, photo,  date_annonce, id_user )
     
     db.session.add(annonce)
     db.session.commit()
     return annonce_schema.jsonify(annonce)
+
+#Consulter User
+@app.get("/consul/<id_user>")
+def get_user(id_user):
+    userr = User.query.get(id_user)
+
+    return jsonify( {
+                       "username": userr.username,
+                       "fullname": userr.fullname,
+                       "email" : userr.email,
+                       "address" : userr.address, 
+                       "password" : userr.password,
+                       "profile_pic": userr.profile_pic,
+                       "num_telephone": userr.num_telephone
+                    }  
+                  )     
+
 
 
 #filtrage_Annonce 
@@ -119,12 +137,35 @@ def delete_annonce(id) :
     db.session.commit()  
     return annonce_schema.jsonify(annonce)
 
-#Consulter Annonce
-@app.get("/consutation/<id>")
-def get_annonce(id):
-    annonce = Annonce.query.get(id)
-    annonce = annonce_schema.dump(annonce)
-    return jsonify(annonce)
+#Consulter Annonce avec les inf sur l utolisateur 
+@app.get("/consultation/<id_annonce>")
+def get_annonce(id_annonce):
+    annonce = Annonce.query.get(id_annonce)
+    print(annonce.owner_id)
+    userr = User.query.get(annonce.owner_id)
+    print(userr)
+    return jsonify( {
+                           "categorie" : annonce.categorie,
+                           "type_annonce" : annonce.type_annonce,
+                           "surface" : annonce.surface,
+                           "description" : annonce.description,
+                           "prix" : annonce.prix,
+                           "wilaya" : annonce.wilaya,
+                           "commune" : annonce.commune,
+                           "adresse" : annonce.adresse,
+                           "photo" : annonce.photo, 
+                
+                           "username": userr.username,
+                           "fullname": userr.fullname,
+                           "email" : userr.email,
+                           "address" : userr.address, 
+                           "password" : userr.password,
+                           "profile_pic": userr.profile_pic,
+                           "num_telephone": userr.num_telephone
+
+                    }  
+                  )     
+
 
 #Affichage plus de details sur user 
 @app.get("/Annonce/<user_id>")

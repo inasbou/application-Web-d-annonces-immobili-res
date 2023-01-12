@@ -7,8 +7,8 @@ from datetime import datetime
 
 class User(db.Model):
     __tablename__ = 'user'
-    #serialize_only=()
-    id_user = db.Column(db.Integer, primary_key=True, unique=True )
+    serialize_only=()
+    id_user = db.Column(db.Integer, primary_key=True )
     username = db.Column(db.String(50), nullable=False, unique=True )
     fullname = db.Column(db.String(100), unique=True, nullable=False )
     email = db.Column(db.String(100),nullable=False,unique=True)
@@ -17,8 +17,8 @@ class User(db.Model):
     profile_pic = db.Column(db.String(100), nullable = False)
     num_telephone = db.Column(db.Float(), nullable = False)
     annonces = db.relationship('Annonce', backref='user')
-    messages = db.relationship('Message', backref='user')
-    Images = db.relationship('Img', backref='user')
+    #messages = db.relationship('Message', backref='user')
+    #Images = db.relationship('Img', backref='user')
 
 
     def __init__(self, username, fullname, email, address, password, profile_pic, num_telephone):
@@ -32,7 +32,7 @@ class User(db.Model):
 
 class UserSchema(ma.Schema) :
     class Meta : 
-        fields = ('id_user','username', 'fullname', 'email', 'address', 'password', 'profile_pic', 'num_telephone')
+        fields = ('username', 'fullname', 'email', 'address', 'password', 'profile_pic', 'num_telephone')
 
 
 # with app.app_context() : 
@@ -77,9 +77,9 @@ class AnnonceSchema(ma.Schema) :
         fields = ('categorie', 'type_annonce', 'surface', 'description', 'prix', 'wilaya', 'commune', 'adresse','photo', ' date_annonce', 'owner_id')
 
 
-with app.app_context() : 
-      db.drop_all()
-      db.create_all()
+# with app.app_context() : 
+#       db.drop_all()
+#       db.create_all()
 
 class Img(db.Model):
     id_Img = db.Column(db.Integer, primary_key=True)
