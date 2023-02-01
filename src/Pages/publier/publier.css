@@ -142,3 +142,15 @@ text-align: center;
 .photobtn{
     margin-top: 30px;
 }
+
+@media screen and (max-width: 1050px) {
+    .publier{
+       
+        width: 700px;
+        height: 900px;
+        left:100px; 
+    }
+}
+@media screen and (max-width: 550px) {
+    
+}

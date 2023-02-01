@@ -2,7 +2,7 @@ import React from 'react'
 import './Modal.css'
 import jwtDecode from 'jwt-decode';
 import { useEffect , useState } from 'react';
-import { Link } from 'react-router-dom';
+import {Link, Navigate} from 'react-router-dom'; 
 function Modal({ setOpenModal }) {
   const [user , setUser ] = useState({}); 
   function handleCallbackResponse(response)  {
@@ -21,7 +21,9 @@ function Modal({ setOpenModal }) {
       document.getElementById ("sighInDiv"),
       { theme: "outline" , size : "large" }
   ); 
+  
   google.accounts.id.prompt(); 
+  
   } , []);  
   return (
     <div className="Modal">
@@ -43,8 +45,8 @@ function Modal({ setOpenModal }) {
         <h6>En cliquant sur Inscrivez vous, vous indiquez que vous avez lu, compris et accepté les conditions d'utilisation de AQAR.</h6>
       
       <div className="google" id="sighInDiv">
-       {user && { window.location.href = "/main" }
-       }
+       { user ? <Navigate to ="/main"/> : <Navigate to="/" /> }
+         
       </div>
       
       </div>
