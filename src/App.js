@@ -10,6 +10,7 @@ import Userpage from './Pages/Userpage/Userpage';
 import Publier from './Pages/publier/publier'; 
 import Details from './Pages/Detailspage/Detailspage' ; 
 import Messagerie from './Pages/MessagePage/MessagePage'; 
+import Test from './Pages/AuthTest/test'
 function App () {
   return (
     <Router> 
@@ -22,6 +23,7 @@ function App () {
        <Route path="/publier" element={<Publier/>} />
        <Route path="/details" element={<Details/>} />
        <Route path="/message" element={<Messagerie/>} />
+       <Route path="/test" element={<Test/>} />
 
       </Routes>
     </Router> 

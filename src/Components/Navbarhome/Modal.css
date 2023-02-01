@@ -26,7 +26,6 @@
     margin-top: 30px;
     margin-left: 70px;
     position: absolute;
-
     font-family: 'Poppins';
     font-style: normal;
 font-weight: 700;
@@ -50,25 +49,20 @@ color: #2825B9;
   }
   
   
-  .googlebtn{
-width: 300px;
-height: 100px;
+ 
+.google{
+width: 280px;
+height: 70px;
 margin-left: 70px;
-margin-top: 150px;
-border: 2px solid #2825B9;
+margin-top: 90px;
+border: 3px solid #2825B9;
 border-radius: 20px;
-font-family: 'Poppins';
-font-size: 20px;
-font-weight: 700 ;
-color: #959595;
 
-  }
-
-  .googlebtn:hover {
-    background-color: #2825B9;
-    transform: scale( 1.1 );
-    color:#FFFFFF
-  }
+}
+.google:hover{
+  transform: scale( 1.1 );
+}
+  
 
   .modalContainer h6 {
 font-family: 'Poppins';
@@ -82,9 +76,7 @@ color: #959595;
   }
 
 
-.google {
-  padding: 10px;
-}
+
 
 @media screen and (max-width: 1050px) {
   .modalBackground{
@@ -112,16 +104,16 @@ color: #959595;
     font-weight: 400;
     
   }
-  .googlebtn {
-    width:200px;
-    height: 70px;
-    font-size: 10px;
-    margin-left: 25px;
-    margin-top: 70px;
+  .google {
+    width:180px;
+    height: 40px;
+    
+    margin-left: 45px;
+    margin-top: 60px;
   }
   .modalContainer h6 {
     font-size: 10px;
     font-weight: 300;
-margin-top: 20px;
+    margin-top: 50px;
   }
 }
