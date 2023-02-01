@@ -2,7 +2,7 @@ import React from "react";
 
 const AnnonceDetails = () => {
   return (
-    <div className="p-4">
+    <div className="p-4 ">
       <h1 className=" text-xl font-bold text-violet-text">Titre de l'annonce</h1>
       <div className=" flex flex-row justify-between border-b border-gray-300 p-1">
         <p className=" font-bold">Catégorie de l'annonce </p> <p>Location</p>
