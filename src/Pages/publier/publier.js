@@ -6,6 +6,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Formik, Form, Field } from 'formik';
 import axios from "axios";
 function Publier () {
+  const categorie = [
+  { value: "", label: "Catégories de l'annonce ... " },
+  { value: "cat1", label: "Vente" },
+  { value: "cat2", label: "Echange" },
+  { value: "cat3", label: "Location" },
+  { value: "cat4", label: "Location pour vaccances" },
+];
+
+const typee = [
+  { value: "", label: "Type de l'annonce ... " },
+  { value: "type1", label: "Terrain" },
+  { value: "type2", label: "Terrain Agricole" },
+  { value: "type3", label: "Apartement" },
+  { value: "type4", label: "Maison" },
+];
   const [file, setFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const handleFileChange = (event) => {
@@ -33,7 +48,7 @@ function Publier () {
       <div className="publier_inputs">
       <Formik
     initialValues={{ titre: '', categories: '' , type :'',surface :'', prix:'', lien :'' , wilaya:'', commune:'', description:'', condition:'' }}
-    onSubmit={(values, actions) => {
+    onSubmit={(values, actions ) => {
       setTimeout(async () => {
         const response = await axios.post("http://localhost:5000/api", values);
         console.log(response.data);
@@ -45,8 +60,23 @@ function Publier () {
     {({ isSubmitting }) => (
     <Form>
       <Field type="text" name="titre" placeholder="Titre de l'annonce " className="titre" />
-      <Field type="text" name="categories" placeholder="Catégorie de l'annonce" className="categories"/>
-      <Field type="text" name="type" placeholder="Type du bien immobilier" className="type"/>
+      <Field as="select" name="categories"  className="categories">
+          {categorie.map((categories) => (
+            <option key={categories.value} value={categories.value}>
+              {categories.label}
+            </option>
+          ))}
+      </Field>
+      <Field as="select" name="type"  className="type">
+
+        {
+          typee.map((type) => (
+            <option key ={type.value} value={type.value}>
+              {type.label}
+            </option>
+          ))
+        }
+      </Field>
       <Field type="text" name="surface" placeholder="Surface" className="surface"/>
       <Field type="text" name="prix" placeholder="Le prix" className="prix"/>
       <Field type="url" name="lien" placeholder="Lien de la localisation sur Google Map" className="lien"/>
