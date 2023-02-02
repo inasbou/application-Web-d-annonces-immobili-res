@@ -1,0 +1,39 @@
+.file-input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .file-input input[type="file"] {
+  width: 200px;
+  height: 40px;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  background-color: brown;
+  text-transform: none;
+  }
+
+  .file-input button {
+    background-color: blue;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+  }
+
+  .file-input img {
+    width: 100px;
+    height: 100px;
+    margin-top: 1rem;
+  }

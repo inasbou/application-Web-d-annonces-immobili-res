@@ -1,14 +1,28 @@
-import React  from 'react'
+import React , {useState} from 'react'
 import Navbar from '../../Components/Navbar'
 import './publier.css'
 import {faPlusCircle} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Formik, Form, Field } from 'formik';
 import axios from "axios";
-function publier () {
+function Publier () {
+  const [file, setFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+    setPreviewUrl(URL.createObjectURL(event.target.files[0]));
+  };
+  const handleUpload = () => {
+    const formData = new FormData();
+    formData.append("image", file);
+
+    axios.post("/server/upload", formData).then((response) => {
+      console.log(response.data);
+    });
+  };
   return (
     <>
-     
+    <Navbar/>
     <div className="publier">
     <div className="close">
           <button
@@ -39,15 +53,17 @@ function publier () {
       <Field type="text" name="wilaya" placeholder="Wilaya" className="wilaya"/>
       <Field type="text" name="commune" placeholder="Commune"className="commune"/>
       <Field type="text" name="description" placeholder="Description..." className="description"/>
-      <button className="photobtn">
+      <button  className="photobtn" >
          <FontAwesomeIcon icon={faPlusCircle}/> 
+         <input style={{}} type="file" placeholder="Ajouter photos" onChange={handleFileChange} />
           Ajouter des photos
         </button>
         <div className="conditions">
         <Field type="checkbox" name="conditions"  className="cond"/>
         <p> J'accèpte que mes informations soient affichées parmi les détails de cet annonce </p>
         </div>
-      <button className="publierbtn" type="submit" disabled={isSubmitting}>
+      <button onClick={handleUpload} className="publierbtn" type="submit" disabled={isSubmitting}>
+      {previewUrl && <img src={previewUrl} alt="Preview" />}
       Publier
       </button>
     </Form>
@@ -60,7 +76,7 @@ function publier () {
   )
 }
 
-export default publier
+export default Publier
 
 
 /*from flask import Flask, request

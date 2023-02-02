@@ -7,7 +7,7 @@ import Aide from './Pages/aide/aide';
 import Apropos from './Pages/apropos/apropos';
 import MainPage from './Pages/MainPage';
 import Userpage from './Pages/Userpage/Userpage';
-import Publier from './Pages/publier/publier'; 
+import Publier from './Pages/publier/publier';
 import Details from './Pages/Detailspage/Detailspage' ; 
 import Messagerie from './Pages/MessagePage/MessagePage'; 
 function App () {
