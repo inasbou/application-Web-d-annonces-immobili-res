@@ -7,6 +7,7 @@ from flask_restful import Resource, Api, reqparse
 from datetime import datetime
 
 
+
 UPLOAD_FOLDER = 'C:/Users/DELL/Desktop/Back/BackendTeam/instance/database.db'
 ALLOWED_EXTENSTIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
@@ -19,9 +20,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 CORS(app)
 
-
 db = SQLAlchemy(app)
 ma = Marshmallow(app)  
+#migrate.init_app(app, db)
 
 
 

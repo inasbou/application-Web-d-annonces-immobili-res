@@ -76,7 +76,7 @@ class Annonce(db.Model) :
 
 class AnnonceSchema(ma.Schema) :
     class Meta : 
-        fields = ('categorie', 'type_annonce', 'surface', 'description', 'prix', 'wilaya', 'commune', 'adresse','photo', ' date_annonce', 'owner_id')
+        fields = ('id_annonce','categorie', 'type_annonce', 'surface', 'description', 'prix', 'wilaya', 'commune', 'adresse','photo', ' date_annonce', 'owner_id')
 
 
 # with app.app_context() : 

@@ -19,6 +19,9 @@ from pprint import pprint
 from werkzeug.utils import secure_filename
 
 
+
+
+
 user_schema = UserSchema()
 users_schema = UserSchema(many=True) 
 
@@ -74,7 +77,8 @@ def create_user():
                        "address" : user.address, 
                        "password" : user.password,
                        "profile_pic": user.profile_pic,
-                       "num_telephone": user.num_telephone
+                       "num_telephone": user.num_telephone,
+                       
                     }  
                   ) 
    # return user_schema.jsonify(user)
@@ -109,16 +113,18 @@ def create_annonce(id_user):
 def get_user(id_user):
     userr = User.query.get(id_user)
 
-    return jsonify( {
-                       "username": userr.username,
-                       "fullname": userr.fullname,
-                       "email" : userr.email,
-                       "address" : userr.address, 
-                       "password" : userr.password,
-                       "profile_pic": userr.profile_pic,
-                       "num_telephone": userr.num_telephone
-                    }  
-                  )     
+    return user_schema.jsonify(userr)
+
+    # return jsonify( {
+    #                    "username": userr.username,
+    #                    "fullname": userr.fullname,
+    #                    "email" : userr.email,
+    #                    "address" : userr.address, 
+    #                    "password" : userr.password,
+    #                    "profile_pic": userr.profile_pic,
+    #                    "num_telephone": userr.num_telephone
+    #                 }  
+    #               )     
 
 
 #------------------------------------------------------------------------------#
@@ -180,7 +186,8 @@ def get_annonce(id_annonce):
     print(annonce.owner_id)
     userr = User.query.get(annonce.owner_id)
     print(userr)
-    return jsonify( {
+    return jsonify( {      
+                           "id_annonce" : annonce.id_annonce,
                            "categorie" : annonce.categorie,
                            "type_annonce" : annonce.type_annonce,
                            "surface" : annonce.surface,
@@ -190,18 +197,18 @@ def get_annonce(id_annonce):
                            "commune" : annonce.commune,
                            "adresse" : annonce.adresse,
                            "photo" : annonce.photo, 
-                    },
-
-                    {
+                           "owner_id" : annonce.owner_id,
                            "username": userr.username,
                            "fullname": userr.fullname,
                            "email" : userr.email,
                            "address" : userr.address, 
-                           "password" : userr.password,
-                           "profile_pic": userr.profile_pic,
-                           "num_telephone": userr.num_telephone
+                          "password" : userr.password,
+                          "profile_pic": userr.profile_pic,
+                          "num_telephone": userr.num_telephone
+                    }
+                    
 
-                    }  
+                 
                   )     
 
 #------------------------------------------------------------------------------#
@@ -243,7 +250,7 @@ def upload(id_annonce):
 #recupere photo d annonce du BD
 @app.get('/recuper/<id>')
 def get_img(id):
-    img = Img.query.filter_by(id_Img=id).first()
+    img = Img.query.filter_by(annon=id).first()
     if not img:
         return 'Img Not Found!', 404
 
@@ -297,3 +304,16 @@ def create_commentaire(id_annonce):
     comnt = comn_schema.dump(comnt)
     return jsonify(comnt)
     # return annonce_schema.jsonify(comnt)
+
+  
+
+          #          {
+                  #         "username": userr.username,
+                #        "fullname": userr.fullname,
+                     #       "email" : userr.email,
+                      #      "address" : userr.address, 
+                        #    "password" : userr.password,
+                        #    "profile_pic": userr.profile_pic,
+                        #    "num_telephone": userr.num_telephone
+
+                 #    }   

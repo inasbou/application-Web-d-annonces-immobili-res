@@ -12,6 +12,8 @@ import Details from './Pages/Detailspage/Detailspage' ;
 import Messagerie from './Pages/MessagePage/MessagePage'; 
 function App () {
   return (
+
+  
     <Router> 
       <Routes>
        <Route path="/" element={<Home/> } />
