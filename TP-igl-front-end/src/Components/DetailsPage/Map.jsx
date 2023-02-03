@@ -2,7 +2,7 @@ import React from "react";
 
 const Map = () => {
   let place = "kouba";
-  let url=`https://maps.google.com/maps?width=696&amp;height=597&amp;hl=en&amp;q={${place}}+()&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed`
+  let url=`https://maps.google.com/maps?width=696&amp;height=597&amp;hl=en&amp;q=kouba+()&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed`
          
   function sanitizeUrl(url) {
     return url.replaceAll("&amp", "&");
@@ -14,8 +14,7 @@ const Map = () => {
         marginheight="0"
         marginwidth="0"
         id="gmap_canvas"
-        src="https://maps.google.com/maps?width=696&amp;height=597&amp;hl=en&amp;q=bordj20%el20%Kiffan20%+()&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
-         
+        src={sanitizeUrl(url)} 
         style={{width:"796px",
         height:" 397px"} }
         frameborder="0"

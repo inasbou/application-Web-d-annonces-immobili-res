@@ -1,10 +1,27 @@
-import React from 'react'
+import React, { useState, useEffect  } from "react";
 import './Userpage.css'
 import Navbar from '../../Components/Navbar/Navbar'; 
 import {faArrowTurnUp , faPen , faUser , faPager} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Userimage from '../../assets/Ellipse 1.png'; 
-const Userpage =() => { 
+const Userpage =() => {
+  const [user, setUser] = useState([]);
+  
+  //////recuperer annonces //////
+ useEffect(()=>{
+   fetch('http://127.0.0.1:5000/authe',{
+     'methods':'GET',
+     headers : {
+       'Content-Type':'application/json'
+     }
+   })
+   
+   .then(response => response.json())
+   .then(response => setUser(response)) 
+  .catch(error => console.log(error))
+   console.log(user.id);
+
+ },[]) 
   return (
     <>
     <Navbar/>

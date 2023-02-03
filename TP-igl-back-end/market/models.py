@@ -9,29 +9,25 @@ class User(db.Model):
     __tablename__ = 'user'
     #serialize_only=()
     id_user = db.Column(db.Integer, primary_key=True )
-    username = db.Column(db.String(50), nullable=False, unique=True )
     fullname = db.Column(db.String(100), unique=True, nullable=False )
     email = db.Column(db.String(100),nullable=False,unique=True)
     address = db.Column(db.String(100), nullable = False)
-    password = db.Column(db.String(100), nullable = False)
     profile_pic = db.Column(db.String(100), nullable = False)
     num_telephone = db.Column(db.Float(), nullable = False)
     annonces = db.relationship('Annonce', backref='user')
     Images = db.relationship('Img2', backref='user')
 
 
-    def __init__(self, username, fullname, email, address, password, profile_pic, num_telephone):
-        self.username = username
+    def __init__(self, fullname, email, address, profile_pic, num_telephone):
         self.fullname = fullname
         self.email = email
         self.address= address
-        self.password = password
         self.profile_pic = profile_pic
         self.num_telephone = num_telephone 
 
 class UserSchema(ma.Schema) :
     class Meta : 
-        fields = ('username', 'fullname', 'email', 'address', 'password', 'profile_pic', 'num_telephone')
+        fields = ( 'fullname', 'email', 'address', 'profile_pic', 'num_telephone')
 
 
 # with app.app_context() : 
@@ -43,9 +39,10 @@ class UserSchema(ma.Schema) :
 
 class Annonce(db.Model) :
     __tablename__ = 'annonce'
+    titre = db.Column(db.String(100), nullable = False)
     id_annonce = db.Column(db.Integer(), primary_key = True)
-    categorie = db.Column(Enum('vente', 'echange', 'location', 'location pour vacance', name='categorie_annonce'))
-    type_annonce =  db.Column(Enum('terrain', 'terrain agricole', 'appartement', 'maison', 'bungalow', name='type_annonce'))
+    categorie = db.Column(db.String(100), nullable = False)
+    type_annonce =  db.Column(db.String(100), nullable = False)
     surface = db.Column(db.Float(), nullable = False)
     description = db.Column(db.String(300), nullable = False)
     prix = db.Column(db.Integer(), nullable = False)
@@ -53,15 +50,18 @@ class Annonce(db.Model) :
     commune = db.Column(db.String(30), nullable = False)
     adresse = db.Column(db.String(100), nullable = False)
     photo = db.Column(db.String(30), nullable = False)
-    date_annonce =  db.Column(db.String(100), default = "date")
+    jour = db.Column(db.Integer(), nullable = False)
+    mois = db.Column(db.Integer(), nullable = False)
+    annee = db.Column(db.Integer(), nullable = False)
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id_user'))
     photos = db.relationship('Img', backref='annonce')
     commentaires = db.relationship('Commentaire', backref='annonce')
     
     #likes = db.relationship('Like', backref='likes_owned_post')
 
-    def __init__(self, categorie, type_annonce, surface, description, prix, wilaya, commune, adresse, photo, date_annonce, owner_id ) : 
+    def __init__(self, titre, categorie, type_annonce, surface, description, prix, wilaya, commune, adresse, photo, jour, mois, annee, owner_id ) : 
 
+        self.titre= titre
         self.categorie = categorie
         self.type_annonce = type_annonce
         self.surface = surface
@@ -71,7 +71,9 @@ class Annonce(db.Model) :
         self.commune = commune
         self.adresse = adresse
         self.photo = photo
-        self.date_annonce = date_annonce
+        self.jour = jour
+        self.mois = mois
+        self.annee= annee
         self.owner_id = owner_id
 
 class AnnonceSchema(ma.Schema) :
@@ -147,3 +149,9 @@ class Commentaire (db.Model):
 class ComntSchema(ma.Schema) :
     class Meta : 
         fields = ('contenu', 'annon_id')
+
+
+
+
+#Enum('terrain', 'terrain agricole', 'appartement', 'maison', 'bungalow', name='type_annonce')
+#Enum('vente', 'echange', 'location', 'location pour vacance', name='categorie_annonce')

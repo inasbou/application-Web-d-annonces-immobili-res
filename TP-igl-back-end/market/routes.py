@@ -14,9 +14,12 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.linear_model import LinearRegression
 from tabulate import tabulate
 import os
+import datetime
 from datetime import datetime
+from datetime import date
 from pprint import pprint
 from werkzeug.utils import secure_filename
+from datetime import date
 
 
 
@@ -32,6 +35,50 @@ comn_schema = ComntSchema()
 comns_schema = ComntSchema(many=True)  
 
 
+
+#Creation account user 
+@app.route('/authe', methods=['GET','POST'])
+def auth():
+ 
+    if request.method == 'POST':
+     data = request.get_json()
+     fullname = data["name"]
+     email = data["email"]
+     profile_pic  = data["picture"]
+     address = 'llll'
+     num_telephone = 213699441980
+
+
+    
+     user = User(  fullname, email, address, profile_pic, num_telephone)
+
+     db.session.add(user)
+     db.session.commit()
+     
+    elif request.method == 'GET':
+         data = request.get_json()
+         fullname = data["name"]
+         email = data["email"]
+         profile_pic  = data["picture"]
+         address = 'llll'
+         num_telephone = 213699441980
+        
+         userr = User.query.filter_by(email= emaill ).all()
+         userr = user_schema.dump(userr)
+         return jsonify( {
+                       "id_user": user.id_user,
+                       "fullname": user.fullname,
+                       "email" : user.email,
+                       "address" : user.address, 
+                       "profile_pic": user.profile_pic,
+                       "num_telephone": user.num_telephone,
+                       
+                    }  
+                  ) 
+   # return user_schema.jsonify(user)
+
+
+ #------------------------------------------------------------------------------#
 
 #------------------------------------------------------------------------------#
 
@@ -57,25 +104,21 @@ def get_users():
 @app.post("/user")
 def create_user():
 
-    username = request.json['username']
     fullname = request.json['fullname']
     email = request.json['email']
     address = request.json['address']
-    password = request.json['password']
     profile_pic = request.json['profile_pic']
     num_telephone = request.json['num_telephone']
 
     
-    user = User(  username, fullname, email, address, password, profile_pic, num_telephone)
+    user = User(  fullname, email, address, profile_pic, num_telephone)
 
     db.session.add(user)
     db.session.commit()
     return jsonify( {
-                       "username": user.username,
                        "fullname": user.fullname,
                        "email" : user.email,
                        "address" : user.address, 
-                       "password" : user.password,
                        "profile_pic": user.profile_pic,
                        "num_telephone": user.num_telephone,
                        
@@ -83,9 +126,41 @@ def create_user():
                   ) 
    # return user_schema.jsonify(user)
 
+
+ #------------------------------------------------------------------------------#
+
+#Deposer une annonce 
+@app.post("/annonces/<id_user>")
+def createe_annonce(id_user):
+
+    data = request.get_json()
+    titre = data["titre"]
+    categorie = data["categories"]
+    type_annonce  = data["type"]
+    surface = data["surface"]
+    description = data["description"]
+    prix= data["prix"]
+    wilaya  = data["wilaya"]
+    commune = data["commune"]
+    adresse = data["lien"]
+    photo = "Picc"
+    jour = datetime.now().date().day
+    mois = datetime.now().date().month
+    annee = datetime.now().date().year
+    annonce = Annonce(titre,categorie, type_annonce, surface, description, prix, wilaya, commune, adresse, photo,jour, mois, annee, id_user )
+    print(annonce)
+    db.session.add(annonce)
+    db.session.commit()
+    
+
+ 
+    return annonce_schema.jsonify(annonce)
+
 #------------------------------------------------------------------------------#
 
-#Deposer un annonce 
+#------------------------------------------------------------------------------#
+
+#Deposer une annonce 
 @app.post("/annonce/<id_user>")
 def create_annonce(id_user):
 
@@ -97,7 +172,7 @@ def create_annonce(id_user):
     wilaya = request.json['wilaya']
     commune = request.json['commune']
     adresse = request.json['adresse']
-    photo = request.json['photo']
+    photo = "hhhhh"
     date_annonce = datetime.now()
    
     annonce = Annonce(categorie, type_annonce, surface, description, prix, wilaya, commune, adresse, photo,  date_annonce, id_user )
@@ -112,6 +187,11 @@ def create_annonce(id_user):
 @app.get("/consul/<id_user>")
 def get_user(id_user):
     userr = User.query.get(id_user)
+    today = datetime.now().date().year
+
+    #day = today.day
+
+    print(today)
 
     return user_schema.jsonify(userr)
 
@@ -130,6 +210,7 @@ def get_user(id_user):
 #------------------------------------------------------------------------------#
 
 #filtrage_Annonce 
+
 # % le type  
 @app.get("/FiltAnnonce/type/<type>")
 def filt_annonces_type(type):
@@ -198,11 +279,9 @@ def get_annonce(id_annonce):
                            "adresse" : annonce.adresse,
                            "photo" : annonce.photo, 
                            "owner_id" : annonce.owner_id,
-                           "username": userr.username,
                            "fullname": userr.fullname,
                            "email" : userr.email,
                            "address" : userr.address, 
-                          "password" : userr.password,
                           "profile_pic": userr.profile_pic,
                           "num_telephone": userr.num_telephone
                     }
@@ -226,7 +305,7 @@ def details(user_id):
 @app.post("/upload/<id_annonce>")
 def upload(id_annonce):
 
-    file = request.files['']
+    file = request.files['image']
     # if file not in request.files:
     #   return jsonify({'error': 'photo not provided'}), 400
     if not file:
@@ -254,7 +333,9 @@ def get_img(id):
     if not img:
         return 'Img Not Found!', 404
 
-    return Response(img.img, mimetype=img.mimetype)
+    # return Response( img.img, mimetype=img.mimetype)
+    return  jsonify({"id_Img" : img.id_Img,
+                     "name" : img.name})
 
 #------------------------------------------------------------------------------#
 

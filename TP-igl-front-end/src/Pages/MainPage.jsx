@@ -22,6 +22,7 @@ const MainPage = () => {
 
   },[])
 
+
   
 
 
@@ -32,13 +33,14 @@ const MainPage = () => {
       <Navbar/>
           
   { (annonces.map((annonce) => (
+    <div className="flex flex-row  text-violet-text     ">
       <Annonce
       id_annonce={annonce.id_annonce}
       categorie ={annonce.categorie}
       type_annonce ={ annonce.type_annonce}
       prix = {annonce.prix}
       photo = {annonce.photo}
-      />
+      /> </div>
     )) ) }
      
       <Footer/>

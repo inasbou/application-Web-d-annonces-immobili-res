@@ -1,67 +1,63 @@
-import {React ,useState,useEffect} from 'react'
-import {useLocation} from 'react-router-dom';
-import AnnonceDetails from '../Components/DetailsPage/AnnonceDetails'
-import AnnonceurInfos from '../Components/DetailsPage/AnnonceurInfos'
-import Navbar from '../Components/Navbar'
+import { React, useState, useEffect } from "react";
+import Map   from "../Components/DetailsPage/Map";
+import AnnonceDetails from "../Components/DetailsPage/AnnonceDetails";
+import AnnonceurInfos from "../Components/DetailsPage/AnnonceurInfos";
+
 
 const DetailsPage = (props) => {
-/*  const location = useLocation();
+  /*  const location = useLocation();
   const [details, setDetails] = useState([]);*/
-  
-  const [annonce, setAnnonce] = useState([]);
- 
- useEffect(()=>{
-   
-  fetch(`http://127.0.0.1:5000/consultation/${props.id_annonce}`,{
-     'methods':'GET',
-     headers : {
-       'Content-Type':'application/json'
-     }
-   })
-   
-   .then(response => response.json())
-   .then(response => setAnnonce(response)) 
-   .catch(error => console.log(error))
-   console.log(annonce);
 
- },[])
+  const [annonce, setAnnonce] = useState([]);
+
+  useEffect(() => {
+    fetch(`http://127.0.0.1:5000/consultation/${props.id_annonce}`, {
+      methods: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => setAnnonce(response))
+      .catch((error) => console.log(error));
+    console.log(annonce);
+  }, []);
   return (
     <div>
-     
-    <div className=' p-3 border-gray-300  m-3  rounded-xl border-2  flex flex-col lg:flex-row'>
-     <div className='lg:w-1/2 m-4' >
-     <AnnonceDetails
-      
-      categorie={annonce.categorie}
-        type_annonce ={annonce.type_annonce}
-        surface ={ annonce.surface}
-        prix = {annonce.prix}
-        commune ={ annonce.commune}
-        description = {annonce.description}/>
-      
-    
-     
-     </div>
-    
+      <div className=" p-3 border-gray-300  m-3  rounded-xl border-2  flex flex-col lg:flex-row">
+       
+        <div className="lg:w-1/2 m-4">
+         
+          <AnnonceDetails
+            categorie={annonce.categorie}
+            type_annonce={annonce.type_annonce}
+            surface={annonce.surface}
+            prix={annonce.prix}
+            commune={annonce.commune}
+            description={annonce.description}
+          />
+        </div>
+        <Map/>
+      </div><div className="flex justify-center">
+       <p>src= {props.src}</p>
+        <AnnonceurInfos
+        fullname={annonce.fullname}
+        address={annonce.address}
+        email={annonce.email}
+        num_telephone={annonce.num_telephone}
+      /></div>
     </div>
-      <AnnonceurInfos 
-     fullname= {annonce.fullname}
-     address={annonce.address}
-     email={annonce.email}
-     num_telephone={annonce.num_telephone}
-     />
-    </div>
-  )
-}
+  );
+};
 
-export default DetailsPage
+export default DetailsPage;
 
 /* <AnnonceurInfos 
       fullname= {user.fullname}
       address= {user.address}
       email= {user.email}
       num_telephone={user.num_telephone}
-     />*/ 
+     />*/
 /*  <AnnonceDetails
       
      />categorie={details.categorie}
@@ -117,4 +113,4 @@ const DetailsPage = () => {
 
 export default DetailsPage
 
-*/ 
+*/
