@@ -4,7 +4,7 @@ import jwtDecode from 'jwt-decode';
 import { useEffect , useState } from 'react';
 import {Link, Navigate} from 'react-router-dom'; 
 function Modal({ setOpenModal }) {
-  const [user , setUser ] = useState({}); 
+  const user = false ;  
   function handleCallbackResponse(response)  {
     console.log("Encoded JWT ID token: " + response.credential ) ; 
     var userObject = jwtDecode(response.credential);

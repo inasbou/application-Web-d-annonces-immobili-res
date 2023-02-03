@@ -47,7 +47,7 @@ const typee = [
     </div> 
       <div className="publier_inputs">
       <Formik
-    initialValues={{ titre: '', categories: '' , type :'',surface :'', prix:'', lien :'' , wilaya:'', commune:'', description:'', condition:'' }}
+    initialValues={{ titre: '', categories: '' , type :'',surface :'', prix:'', lien :'' , wilaya:'', commune:'', description:'', condition:'' , photo:''}}
     onSubmit={(values, actions ) => {
       setTimeout(async () => {
         const response = await axios.post("http://localhost:5000/api", values);
@@ -83,17 +83,15 @@ const typee = [
       <Field type="text" name="wilaya" placeholder="Wilaya" className="wilaya"/>
       <Field type="text" name="commune" placeholder="Commune"className="commune"/>
       <Field type="text" name="description" placeholder="Description..." className="description"/>
-      <button  className="photobtn" >
-         <FontAwesomeIcon icon={faPlusCircle}/> 
-         <input style={{}} type="file" placeholder="Ajouter photos" onChange={handleFileChange} />
-          Ajouter des photos
-        </button>
+      <Field type="file" name="photo" placeholder="AjouterImage" className="inputimage">
+      
+      </Field>
         <div className="conditions">
         <Field type="checkbox" name="conditions"  className="cond"/>
         <p> J'accèpte que mes informations soient affichées parmi les détails de cet annonce </p>
         </div>
       <button onClick={handleUpload} className="publierbtn" type="submit" disabled={isSubmitting}>
-      {previewUrl && <img src={previewUrl} alt="Preview" />}
+      
       Publier
       </button>
     </Form>
