@@ -27,7 +27,7 @@ class User(db.Model):
 
 class UserSchema(ma.Schema) :
     class Meta : 
-        fields = ( 'fullname', 'email', 'address', 'profile_pic', 'num_telephone')
+        fields = ( 'id_user','fullname', 'email', 'address', 'profile_pic', 'num_telephone')
 
 
 # with app.app_context() : 
@@ -78,7 +78,7 @@ class Annonce(db.Model) :
 
 class AnnonceSchema(ma.Schema) :
     class Meta : 
-        fields = ('id_annonce','categorie', 'type_annonce', 'surface', 'description', 'prix', 'wilaya', 'commune', 'adresse','photo', ' date_annonce', 'owner_id')
+        fields = ('titre','id_annonce','categorie', 'type_annonce', 'surface', 'description', 'prix', 'wilaya', 'commune', 'adresse','photo', ' date_annonce', 'owner_id')
 
 
 # with app.app_context() : 

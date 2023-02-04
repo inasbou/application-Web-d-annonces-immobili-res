@@ -14,7 +14,7 @@ const Map = () => {
         marginheight="0"
         marginwidth="0"
         id="gmap_canvas"
-        src={sanitizeUrl(url)} 
+        src="https://maps.google.com/maps?width=696&amp;height=597&amp;hl=en&amp;q=kouba+()&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
         style={{width:"796px",
         height:" 397px"} }
         frameborder="0"

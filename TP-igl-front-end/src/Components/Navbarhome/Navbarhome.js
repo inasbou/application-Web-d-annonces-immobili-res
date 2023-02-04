@@ -29,15 +29,7 @@ function Navbarhome() {
         </button>
         {modalOpen && <Modal setOpenModal={setModalOpen} />}
       </div>
-      <div className="navbar-signup"> 
-      <button  className="openModal2Btn" 
-      onClick={() => {
-        setModal2Open(true);
-      }}>
-        Connexion
-      </button>
-        {modal2Open && <Modal2 setOpenModal={setModal2Open} />}
-      </div>
+      
       </div>
 
 
@@ -55,10 +47,12 @@ function Navbarhome() {
           </div>
           <div className="navbar-menu_container-links-sign">
              <div className="navbar-menu_container-links-signin"> 
-               <button type="button">S'inscrire</button>
-             </div>
-             <div className="navbar-menu_container-links-signup"> 
-               <button type="button">Connexion</button>
+               <button className="buttonmenu1" onClick={() => {
+          setModalOpen(true);
+        }}
+
+        >S'inscrire</button>
+        {modalOpen && <Modal setOpenModal={setModalOpen} />}
              </div>
           </div>
         </div>

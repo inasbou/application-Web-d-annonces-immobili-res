@@ -1,4 +1,4 @@
-import React , {useState} from 'react'
+import React , {useState,useEffect} from 'react'
 import Navbar from '../../Components/Navbar'
 import './publier.css'
 import {faPlusCircle} from '@fortawesome/free-solid-svg-icons';
@@ -6,6 +6,28 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Formik, Form, Field } from 'formik';
 import axios from "axios";
 function Publier () {
+  const [user, setUser] = useState([]);
+
+  
+  //////recuperer annonces //////
+ useEffect(()=>{
+   fetch('http://127.0.0.1:5000/Current_User',{
+     'methods':'GET',
+     headers : {
+       'Content-Type':'application/json'
+     }
+   })
+   
+   .then(response => response.json())
+   .then((data)=> setUser(data));
+  //  .then(response => setUser(response)) 
+  // .catch(error => console.log(error))
+   console.log(user);
+  
+
+ },[]) ;
+
+
   const categorie = [
   { value: "", label: "Catégories de l'annonce ... " },
   { value: "Vente", label: "Vente" },
@@ -32,12 +54,13 @@ const typee = [
             X
           </button>
     </div> 
+    { (user.map((userr) => ( <div>
       <div className="publier_inputs">
       <Formik
     initialValues={{  titre: '' , categories: '' , type :'',surface :'', prix:'', lien :'' , wilaya:'', commune:'', description:''  }}
     onSubmit={(values, actions ) => {
       setTimeout(async () => {
-        const response = await axios.post("http://localhost:5000/annonces/2", values);
+        const response = await axios.post(`http://localhost:5000/annonces/${userr.id_user}`, values);
         console.log(response.data);
         alert(JSON.stringify(values, null, 10));
         actions.setSubmitting(false);
@@ -81,7 +104,7 @@ const typee = [
     </Form>
   )}
 </Formik>
-      </div>
+      </div></div>)) ) }
     </div>
     
     </>

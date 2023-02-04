@@ -7,7 +7,7 @@ import Modal from "react-modal";
 import DetailsPage from "../../Pages/DetailsPage";
 
 const Annonce = (props) => {
-  const [image, setImage] = useState([]);
+  /*const [image, setImage] = useState([]);
   
   //////recuperer annonces //////
  useEffect(()=>{
@@ -23,69 +23,71 @@ const Annonce = (props) => {
   .catch(error => console.log(error))
    console.log(image);
 
- },[])
+ },[])*/
 
 
+ 
+ const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
+let subtitle;
 
-  const customStyles = {
-    content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)",
-    },
-  };
-  let subtitle;
+const [modalIsOpen, setIsOpen] = React.useState(false);
 
-  const [modalIsOpen, setIsOpen] = React.useState(false);
+function openModal() {
+  setIsOpen(true);
+}
 
-  function openModal() {
-    setIsOpen(true);
-  }
+function afterOpenModal() {
+  // references are now sync'd and can be accessed.
+  subtitle.style.color = "#f00";
+}
 
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    subtitle.style.color = "#f00";
-  }
+function closeModal() {
+  setIsOpen(false);
+}
 
-  function closeModal() {
-    setIsOpen(false);
-  }
+return (
+  
+    <div className="flex flex-col gap-1 bg-gray-100 rounded-xl shadow-lg  m-4  py-2 px-8 hover:shadow-xl  sm:w-52">
+      <h5 className="text-center font-bold px-2 py-3">
+       {props.titre}
+      </h5>
+      
+       <img src={props.photo} />
+      <p className="text-center px-2 ">  {props.type_annonce}</p>
+      <p className="text-center px-2 "> {props.categorie} </p>
+      <div className="flex flex-row justify-between">
+        <div className="flex flex-row">
+          <BsCashCoin />
+          <p>{props.prix}millions</p>
+         </div></div>
+          <button onClick={openModal}>details</button>
+          <Modal
+            isOpen={modalIsOpen}
+            onAfterOpen={afterOpenModal}
+            onRequestClose={closeModal}
+            style={customStyles}
+            contentLabel="Example Modal"
+          >
+            <button onClick={closeModal}>close</button>
 
-  return (
-    
-      <div className="flex flex-col bg-gray-100 rounded-xl shadow-lg  m-4  p-1 hover:shadow-xl   overflow-hidden sm:w-52">
-        <h5 className="text-center font-bold px-2 py-3">
-          {props.type_annonce}
-        </h5>
-        <p >C:/Users/DELL/Desktop/Anime/${image.name}`</p> 
-         
-        <p className="text-center px-2 "> {props.categorie}</p>
-        <div className="flex flex-row justify-between">
-          <div className="flex flex-row">
-            <BsCashCoin />
-            <p>{props.id_annonce}</p>
-            <button onClick={openModal}>details</button>
-            <Modal
-              isOpen={modalIsOpen}
-              onAfterOpen={afterOpenModal}
-              onRequestClose={closeModal}
-              style={customStyles}
-              contentLabel="Example Modal"
-            >
-              <button onClick={closeModal}>close</button>
-
-              <div>
-                <DetailsPage id_annonce={props.id_annonce} src={image.name} />
-              </div>
-            </Modal>
-          </div>
-        </div>
-      </div>
-    
-  );
+            <div>
+              <DetailsPage id_annonce={props.id_annonce}  />
+            </div>
+          </Modal>
+        
+      
+    </div>
+  
+);
 };
 
 export default Annonce;

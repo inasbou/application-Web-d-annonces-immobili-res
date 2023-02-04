@@ -1,0 +1,80 @@
+.consultation{
+    padding: 50px;
+}
+
+
+.messagebox {
+box-sizing: border-box;
+position: absolute;
+width: 1550px;
+height: 520px;
+margin-left: 70px;
+margin-top: 150px;
+background: #FFFFFF;
+border: 3px solid #C7C7C7;
+border-radius: 30px;
+padding: 50px;
+
+}
+
+.infoos p {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 25px;
+    line-height: 38px;
+    letter-spacing: 0.08em;
+    color: #393939;
+}
+.envoyermessagezone{
+    background-color: #d6d6d6;
+    width:1450px; 
+    height: 300px;
+    border-radius: 30px;
+    padding: 30px;
+}
+
+.message{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 33px; 
+    color: #2C2C2C;
+    background-color: #FFFFFF;
+    border-radius: 40px;
+    width: 600px;
+    height: 100px;
+    padding: 20px;
+    margin-left: 750px;
+
+}
+
+.envoyer{
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+.envoyer input {
+    width:1200px;
+    height: 60px;
+    background-color: #d6d6d661;
+    border-radius: 20px;
+}
+.btnenvoie{
+    display: flex;
+    flex-direction: row;
+    width: 140px;
+height: 50px;
+border: 2px solid #E8E8E8;
+border-radius: 10px;
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 22px;
+line-height: 33px;
+color: #505050;
+padding: 10px;
+}

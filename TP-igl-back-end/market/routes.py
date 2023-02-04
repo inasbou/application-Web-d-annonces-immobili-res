@@ -25,6 +25,8 @@ from datetime import date
 
 
 
+email_user = ''
+
 user_schema = UserSchema()
 users_schema = UserSchema(many=True) 
 
@@ -37,35 +39,23 @@ comns_schema = ComntSchema(many=True)
 
 
 #Creation account user 
-@app.route('/authe', methods=['GET','POST'])
+@app.route('/authe', methods=['POST'])
 def auth():
- 
-    if request.method == 'POST':
+     global email_user
      data = request.get_json()
      fullname = data["name"]
-     email = data["email"]
+     email_user= data["email"]
      profile_pic  = data["picture"]
-     address = 'llll'
-     num_telephone = 213699441980
+     address = ''
+     num_telephone = 0
 
-
-    
-     user = User(  fullname, email, address, profile_pic, num_telephone)
+     user = User(  fullname, email_user, address, profile_pic, num_telephone)
 
      db.session.add(user)
      db.session.commit()
      
-    elif request.method == 'GET':
-         data = request.get_json()
-         fullname = data["name"]
-         email = data["email"]
-         profile_pic  = data["picture"]
-         address = 'llll'
-         num_telephone = 213699441980
-        
-         userr = User.query.filter_by(email= emaill ).all()
-         userr = user_schema.dump(userr)
-         return jsonify( {
+       
+     return jsonify( {
                        "id_user": user.id_user,
                        "fullname": user.fullname,
                        "email" : user.email,
@@ -79,6 +69,22 @@ def auth():
 
 
  #------------------------------------------------------------------------------#
+
+ #Return Current user 
+@app.get("/Current_User")
+def get_CurrentUser ():
+  global email_user 
+  userr = User.query.filter_by(email= email_user ).all()
+  print(userr)
+  #userr =user_schema.dump(userr)
+  return users_schema.jsonify(userr)
+
+
+#   return jsonify({
+#         "address" : userr.address,
+#         "id_user" : userr.id_user
+#          }) 
+
 
 #------------------------------------------------------------------------------#
 
@@ -97,6 +103,32 @@ def get_users():
     all_users = User.query.all()
     users = users_schema.dump(all_users)
     return jsonify(users)
+
+#------------------------------------------------------------------------------#
+
+
+#Ajouter/Modifier adresse et num de telephone 
+@app.put("/ModifierInfo/<id_user>")
+def put_info(id_user):
+    user = User.query.get(id_user)
+    num_telephone = request.json['num_telephone']
+    address = request.json['address']
+    user.num_telephone= num_telephone
+    user.address = address
+    db.session.commit()
+    return user_schema.jsonify(user)
+
+
+#------------------------------------------------------------------------------#
+
+
+#Consultation mes annonces 
+@app.get("/MesAnnonces/<id_user>")
+def get_MesAnnonces(id_user): 
+    annonce_s = Annonce.query.filter_by(owner_id = id_user).all()
+    annonce_s = annonces_schema.dump(annonce_s)
+    return jsonify(annonce_s)
+
 
 #------------------------------------------------------------------------------#
 
@@ -251,7 +283,7 @@ def search_mot(mot):
 #------------------------------------------------------------------------------#
          
 #Supprimer Annonce
-@app.delete("/annonce/<id>")
+@app.route('/Supprimer/<id>', methods=['DELETE'])
 def delete_annonce(id) :
     annonce = Annonce.query.get(id)
     db.session.delete(annonce)

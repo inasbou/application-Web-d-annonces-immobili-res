@@ -10,6 +10,7 @@ import Userpage from './Pages/Userpage/Userpage';
 import Publier from './Pages/publier/publier'; 
 import Details from './Pages/Detailspage/Detailspage' ; 
 import Messagerie from './Pages/MessagePage/MessagePage'; 
+import MesAnnonces from './Pages/MesAnnonces';
 function App () {
   return (
 
@@ -24,7 +25,7 @@ function App () {
        <Route path="/publier" element={<Publier/>} />
        <Route path="/details" element={<Details/>} />
        <Route path="/message" element={<Messagerie/>} />
-
+       <Route path="/mesannonces" element={<MesAnnonces/>}  />
       </Routes>
     </Router> 
     

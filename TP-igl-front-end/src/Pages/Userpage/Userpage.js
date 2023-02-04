@@ -1,15 +1,17 @@
 import React, { useState, useEffect  } from "react";
 import './Userpage.css'
-import Navbar from '../../Components/Navbar/Navbar'; 
+import Navbar from '../../Components/Navbar'
 import {faArrowTurnUp , faPen , faUser , faPager} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Userimage from '../../assets/Ellipse 1.png'; 
+import { Link } from "react-router-dom";
 const Userpage =() => {
-  const [user, setUser] = useState([]);
+const [user, setUser] = useState([]);
+
   
   //////recuperer annonces //////
  useEffect(()=>{
-   fetch('http://127.0.0.1:5000/authe',{
+   fetch('http://127.0.0.1:5000/Current_User',{
      'methods':'GET',
      headers : {
        'Content-Type':'application/json'
@@ -17,11 +19,13 @@ const Userpage =() => {
    })
    
    .then(response => response.json())
-   .then(response => setUser(response)) 
-  .catch(error => console.log(error))
-   console.log(user.id);
+   .then((data)=> setUser(data));
+  //  .then(response => setUser(response)) 
+  // .catch(error => console.log(error))
+   console.log(user);
+  
 
- },[]) 
+ },[]) ;
   return (
     <>
     <Navbar/>
@@ -36,10 +40,10 @@ const Userpage =() => {
       <FontAwesomeIcon icon={faUser} />
       Mon Compte
       </a>
-      <a href="/mesannonce">
+      <Link to="/mesannonces" state={{data:user}}>
       <FontAwesomeIcon icon={faPager} />
       Mes annonces
-      </a>
+      </Link>
       </div>
       <div className="decnxn"  >
       <a href="/">
@@ -47,27 +51,32 @@ const Userpage =() => {
       </a>
       </div>
      </div>
-     <div className="box2"> 
+    
+     
+     { (user.map((userr) => (
+      <div className="box2">
      <div className="image">
-          <img src={Userimage} alt="user"/>
+          <img src={userr.profile_pic} alt="user"/>
+      </div>
+
+        <div className="infos">
+          <p className="titrex"> Nom et prénom</p>
+          <p className="affichage">{userr.fullname}</p>
+          <p className="titrex">Adresse email </p>
+          <p className="affichage">{userr.email}</p>
+          <p className="titrex">Numero de téléphone</p>
+          <p className="affichage">{userr.num_telephone}</p>
+          <p className="titrex">Adresse</p>
+          <p className="affichage">{userr.address}</p>
           <a>
             <FontAwesomeIcon icon={faPen} />
-              Modifier la photo de profile
+              Modifier Mes informations
           </a>
+        </div> 
         </div>
-        <div className="infos">
-          <p> Nom et prénom</p>
-          <input className="nom" type="text"  />
-          <p>Adresse email </p>
-          <input className="email" type="text" />
-          <p>Numero de téléphone</p>
-          <input className="numtlfn" type="text" />
-          <p>Adresse</p>
-          <input className="adresse" type="text" />
-        </div>
-        
+        )) ) }
      </div>
-    </div>
+
     </>
   )
 }
