@@ -2,15 +2,17 @@ import React from 'react'
 import './Modal.css'
 import jwtDecode from 'jwt-decode';
 import { useEffect , useState } from 'react';
-import {Link, Navigate} from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom'; 
 function Modal({ setOpenModal }) {
-  const user = false ;  
+  const [userData , setUserData]= useState(false) ; 
+  const navigate = useNavigate();
   function handleCallbackResponse(response)  {
     console.log("Encoded JWT ID token: " + response.credential ) ; 
     var userObject = jwtDecode(response.credential);
-    console.log(userObject); 
+    const user = JSON.stringify(userObject);
+    console.log(user); 
+    setUserData(user); 
   }
-
   useEffect( () => {
       /* global google */
       google.accounts.id.initialize ({
@@ -44,8 +46,9 @@ function Modal({ setOpenModal }) {
 
         <h6>En cliquant sur Inscrivez vous, vous indiquez que vous avez lu, compris et accepté les conditions d'utilisation de AQAR.</h6>
       
-      <div className="google" id="sighInDiv">
-       { user ? <Navigate to ="/main"/> : <Navigate to="/" /> }
+      <div className="google" id="sighInDiv" >
+       { userData ?
+       navigate('/main') : navigate('/') }
          
       </div>
       
